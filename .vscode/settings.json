@@ -1,0 +1,11 @@
+{
+    "cSpell.enableFiletypes": [
+        "dart",
+        "dockercompose",
+        "dockerfile",
+        "editorconfig",
+        "jsx-attr",
+        "jsx-tags",
+        "makefile"
+    ]
+}

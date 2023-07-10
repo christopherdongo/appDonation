@@ -8,7 +8,7 @@ type PropsHeader = {
 }
 
 
-export const Header: React.FC<PropsHeader> = ({title,type}) =>{
+export const Header: React.FC<PropsHeader> = ({title='hola como estas',type=1}) =>{
 
     const ramdonTitle =() => {
         switch(type){
@@ -30,9 +30,4 @@ export const Header: React.FC<PropsHeader> = ({title,type}) =>{
             >{title}</Text>
         </View>
     )
-}
-
-Header.defaultProps = {
-    title: 'hola como estas',
-    type: 1,
 }

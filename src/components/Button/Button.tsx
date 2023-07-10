@@ -10,7 +10,7 @@ type PropsButton = {
 }
 
 
-export const Button = ({title, onPress, isDisabled}:PropsButton)=> {
+export const Button = ({title, onPress, isDisabled=false}:PropsButton)=> {
 
     return (
         <Pressable
@@ -25,6 +25,3 @@ export const Button = ({title, onPress, isDisabled}:PropsButton)=> {
     )
 }
 
-Button.defaultProps = {
-  isDisabled: false,
-}

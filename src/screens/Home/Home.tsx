@@ -1,10 +1,13 @@
 import React from 'react';
-import {Text, View, SafeAreaView} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import {Header} from '../../components/Header/Header';
-import{Button} from '../../components/Button/Button';
 import {Tab} from '../../components/Tab/Tab'
 import {globalStyle} from '../../styles/globalStyle';
-import { horizontalScale } from '../../styles/scaling';
+
+import { Badge } from '../../components/Badge/Badge';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Search } from '../../components/Search/Search';
 //import styles from './styles';
 
 export const Home: React.FC = () => {
@@ -16,6 +19,10 @@ export const Home: React.FC = () => {
 
       <Tab  title={'Highlight'} />
       <Tab title={'Highlight'}  isDisabled={true}/>
+      <Badge title={"Enviroment"} isDisabled={false} />
+      <Search />
+
+      <FontAwesomeIcon icon={faSearch} />
       
 
     </SafeAreaView>
