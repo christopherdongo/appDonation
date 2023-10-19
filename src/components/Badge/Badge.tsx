@@ -9,7 +9,7 @@ type PropsButton = {
   onPress?: () => void | undefined;
 };
 
-export const Badge = ({
+export const Badge: React.FC<PropsButton> = ({
   title,
   onPress = () => console.log('onPress'),
   isDisabled = false,

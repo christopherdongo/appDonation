@@ -3,12 +3,12 @@ import { Text, View } from 'react-native';
 import { styles } from './style';
 
 type PropsHeader = {
-    title?: string;
-    type?: number,
+    title: string,
+    type: number,
+    color?: string
 }
 
-
-export const Header: React.FC<PropsHeader> = ({title='hola como estas',type=1}) =>{
+export const Header: React.FC<PropsHeader> = ({title='', type=1, color='#000000'}) =>{
 
     const ramdonTitle =() => {
         switch(type){
@@ -26,7 +26,7 @@ export const Header: React.FC<PropsHeader> = ({title='hola como estas',type=1}) 
     return(
         <View>
             <Text 
-            style={ramdonTitle()}
+            style={[ramdonTitle(), color && {color: color}]}
             >{title}</Text>
         </View>
     )

@@ -10,7 +10,7 @@ type PropsButton = {
 }
 
 
-export const Button = ({title, onPress, isDisabled=false}:PropsButton)=> {
+export const Button: React.FC<PropsButton> = ({title, onPress, isDisabled=false})=> {
 
     return (
         <Pressable
