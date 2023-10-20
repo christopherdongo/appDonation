@@ -4,7 +4,7 @@ import { styles } from './style';
 
 type PropsHeader = {
     title: string,
-    type: number,
+    type?: number,
     color?: string
 }
 
