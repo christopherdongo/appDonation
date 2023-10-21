@@ -6,10 +6,10 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { scaleFontSize } from '../../styles/scaling';
 
 type PropsSearch = {
-    onSearch: (args: string) => void
+    onSearch?: (args: string) => void
 }
 
-export const Search: React.FC<PropsSearch> = ({onSearch})=>{
+export const Search: React.FC<PropsSearch> = ({onSearch = () => {}})=>{
 
     const textInputRef: React.MutableRefObject<null> = useRef(null);
     const [search, setSearch] = useState('')

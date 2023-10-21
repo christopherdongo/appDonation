@@ -1,48 +1,53 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, View, Text, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, View, Text, Image, Pressable, FlatList, ScrollView} from 'react-native';
 import {Header} from '../../components/Header/Header';
 import {globalStyle} from '../../styles/globalStyle';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { updateFirstName, updateLastName, resetTopInitialState } from '../../redux/reducers/User'
-import { ScrollView } from 'react-native-gesture-handler';
+import { Categories, resetCategories, updateSelectedCategoryId } from '../../redux/reducers/Categories'
+import { Button } from '../../components/Button/Button'
 import {styles} from './styles';
 import { Search } from '../../components/Search/Search';
+import { Tab } from '../../components/Tab/Tab';
+
 
 export const Home: React.FC = () => {
 
   const { firstName, lastName, profileImage } = useSelector( (state: RootState) => state.user)
+  const { categories, selectedCategoryId}  = useSelector((state: RootState) => state.categories)
 
   const dispatch = useDispatch()
 
-  console.log(profileImage)
+  const [categoryPage, setCategoryPage] = useState(1)
+  const [categoryList, setCategoryList] = useState([])
+
+  const categoryPageSize = 4
 
   useEffect(() => {
     dispatch(resetTopInitialState())
   }, [])
-  
+
+  useEffect(() => {
+       setCategoryList(pagination(categories, categoryPage, categoryPageSize))
+       setCategoryPage(prev => prev + 1)
+  }, [])
+
+  const pagination  = (items: {][], pageNumber: number, pageSize: number) => {
+    const startIndex = (pageNumber - 1) * pageSize
+    const endIndex = startIndex + pageSize
+
+    if(startIndex >= items.length) return []
+
+    return items.slice(startIndex, endIndex)
+  }
+
+
 
   return (
     <SafeAreaView
     style={[globalStyle.backgroundWhite, globalStyle.flex]}
     >
-      {/* <Search onSearch={(value: string) => {console.log(value)}}  /> */}
-
-      {/*<View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: horizontalScale(24)}}>
-      <SingleDonationItem 
-    uri={'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'} 
-    badgeTitle={"Environment"} 
-    donationTitle={"Tree Cactus"} 
-    price={44} 
-    />
-
-<SingleDonationItem 
-    uri={'https://img.pixers.pics/pho_wat(s3:700/FO/44/24/64/31/700_FO44246431_ab024cd8251bff09ce9ae6ecd05ec4a8.jpg,525,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,305,650,jpg)/stickers-cactus-cartoon-illustration.jpg.jpg'} 
-    badgeTitle={"Environment"} 
-    donationTitle={"Tree Cactus"} 
-    price={44} 
-    />
-  </View> */}
     <ScrollView
     showsVerticalScrollIndicator={false}
     >
@@ -58,6 +63,32 @@ export const Home: React.FC = () => {
       </View>
       <View style={styles.searchBox}>
         <Search />
+      </View>
+      <Pressable style={styles.highlightImageContainer}>
+        <Image 
+        style={styles.highlight}
+        source={require('../../../assets/images/highlighted_image.png')}
+        resizeMode={'contain'}
+        />
+      </Pressable>
+      <View style={styles.categoryHeader}>
+        <Header title='Select Category' type={2}/>
+      </View>
+      <View style={styles.categories}>
+       <FlatList 
+       horizontal={true}
+       showsHorizontalScrollIndicator={false}
+       data={categories}
+       renderItem={({item}) => <View style={styles.categoryItem} key={item.categoriId}>
+        <Tab
+        onPress={(value) => dispatch(updateSelectedCategoryId(value))}
+        title={item.name} 
+        tabId={item.categoriId}
+       isDisabled={item.categoriId !== selectedCategoryId}
+       /></View>}
+       
+       
+       />
       </View>
     </ScrollView>
     </SafeAreaView>

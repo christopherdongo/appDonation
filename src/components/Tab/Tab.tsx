@@ -5,13 +5,14 @@ import { horizontalScale } from '../../styles/scaling';
 
 
 type PropsButton = {
-    title: string,
-    isDisabled?: boolean,
-    onPress?:() => void,
+    title: string;
+    isDisabled?: boolean;
+    onPress:(arg: number) => void;
+    tabId: number;
 }
 
 
-export const Tab = ({title, onPress, isDisabled}:PropsButton)=> {
+export const Tab = ({title, onPress, isDisabled, tabId}:PropsButton)=> {
 
     const [width, setWith] = useState(0);
 
@@ -24,9 +25,8 @@ export const Tab = ({title, onPress, isDisabled}:PropsButton)=> {
 
     return (
         <Pressable
-        disabled={isDisabled}
         style={[styles.tab, isDisabled && styles.inactiveTab, tabWith]}
-        onPress={onPress}
+        onPress={() => onPress(tabId)}
         >
               <Text
               onTextLayout={event => {
