@@ -5,7 +5,8 @@ import {globalStyle} from '../../styles/globalStyle';
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { updateFirstName, updateLastName, resetTopInitialState } from '../../redux/reducers/User'
-import { Categories, resetCategories, updateSelectedCategoryId } from '../../redux/reducers/Categories'
+import { Categories, resetCategories, updateSelectedCategoryId, CategoriesType } from '../../redux/reducers/Categories'
+import { resetDonations, DonationsType } from '../../redux/reducers/Donations'
 import { Button } from '../../components/Button/Button'
 import {styles} from './styles';
 import { Search } from '../../components/Search/Search';
@@ -16,33 +17,40 @@ export const Home: React.FC = () => {
 
   const { firstName, lastName, profileImage } = useSelector( (state: RootState) => state.user)
   const { categories, selectedCategoryId}  = useSelector((state: RootState) => state.categories)
+  const {donations, selectedDonationId} = useSelector((state: RootState ) =>  state.donations)
 
   const dispatch = useDispatch()
 
-  const [categoryPage, setCategoryPage] = useState(1)
-  const [categoryList, setCategoryList] = useState([])
+  const [donationItems, setDonationsItems] = useState<DonationsType[]>([])
+  const [categoryPage, setCategoryPage] = useState<number>(1)
+  const [categoryList, setCategoryList] = useState<CategoriesType[]>([])
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false)
 
-  const categoryPageSize = 4
-
-  useEffect(() => {
-    dispatch(resetTopInitialState())
-  }, [])
+  const categoryPageSize: number = 4
 
   useEffect(() => {
+    const items = donations
+    const filterdItems = items.filter(value => value.categoryIds.includes(selectedCategoryId))
+    setDonationsItems(filterdItems)
+  }, [selectedCategoryId])
+
+  useEffect(() => {
+    setIsLoadingCategories(true)
        setCategoryList(pagination(categories, categoryPage, categoryPageSize))
        setCategoryPage(prev => prev + 1)
+       setIsLoadingCategories(false)
   }, [])
 
-  const pagination  = (items: {][], pageNumber: number, pageSize: number) => {
+  const pagination  = (items: CategoriesType[], pageNumber: number, pageSize: number) => {
     const startIndex = (pageNumber - 1) * pageSize
     const endIndex = startIndex + pageSize
 
-    if(startIndex >= items.length) return []
+    if(startIndex >= items.length) {
+      return []
+    }
 
     return items.slice(startIndex, endIndex)
   }
-
-
 
   return (
     <SafeAreaView
@@ -76,18 +84,31 @@ export const Home: React.FC = () => {
       </View>
       <View style={styles.categories}>
        <FlatList 
+       onEndReachedThreshold={0.5}
+       onEndReached={() => {
+        console.log('aquiii')
+        if(isLoadingCategories) {
+          return;
+        }
+        console.log('user has reached the end and we are', categoryPage)
+        setIsLoadingCategories(true)
+        let newData = pagination(categories, categoryPage, categoryPageSize)
+        if(newData.length > 0 ){
+          setCategoryList(prevState => [...prevState, ...newData])
+          setCategoryPage(prevState => prevState + 1)
+        }
+        setIsLoadingCategories(false)
+       }}
        horizontal={true}
        showsHorizontalScrollIndicator={false}
        data={categories}
-       renderItem={({item}) => <View style={styles.categoryItem} key={item.categoriId}>
+       renderItem={({item}) => <View style={styles.categoryItem} key={item.categoryId}>
         <Tab
         onPress={(value) => dispatch(updateSelectedCategoryId(value))}
         title={item.name} 
-        tabId={item.categoriId}
-       isDisabled={item.categoriId !== selectedCategoryId}
+        tabId={item.categoryId}
+       isDisabled={item.categoryId !== selectedCategoryId}
        /></View>}
-       
-       
        />
       </View>
     </ScrollView>

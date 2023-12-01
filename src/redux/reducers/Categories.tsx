@@ -1,47 +1,79 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-interface Objects {
-    categoriId: number,
+export type CategoriesType = {
+    categoryId: number,
     name: string
 }
 
 
 interface Initial {
-categories: Objects[];
+categories: CategoriesType[];
   selectedCategoryId: number;
 }
 
 const InitialState: Initial = {
-    categories: [
-          {
-            categoriId: 1,
-            name:"Highlight"
-          },
-          {
-            categoriId: 2,
-            name:"Environment"
-          },
-          {
-            categoriId: 3,
-            name:"Education"
-          },
-{
-    categoriId: 4,
-    name:"Cloathing and Accessories"
-},
-{
-    categoriId: 5,
-    name:"Household goods"
-}
-    ],
+  categories:[
+    {
+      categoryId: 1,
+      name: 'Highlight',
+    },
+    {
+      categoryId: 2,
+      name: 'Environment',
+    },
+    {
+      categoryId: 3,
+      name: 'Education',
+    },
+    {
+      categoryId: 4,
+      name: 'Clothing and Accessories',
+    },
+    {
+      categoryId: 5,
+      name: 'Household goods',
+    },
+    {
+      categoryId: 6,
+      name: 'Electronics',
+    },
+    {
+      categoryId: 7,
+      name: 'Toys and Games',
+    },
+    {
+      categoryId: 8,
+      name: 'Sports Equipment',
+    },
+    {
+      categoryId: 9,
+      name: 'Books and Media',
+    },
+    {
+      categoryId: 10,
+      name: 'Health and Beauty Products',
+    },
+    {
+      categoryId: 11,
+      name: 'Office supplies',
+    },
+    {
+      categoryId: 12,
+      name: 'Tools and Hardware',
+    },
+    {
+      categoryId: 13,
+      name: 'Art and Craft Supplies',
+    },
+  ],
     selectedCategoryId: 1
 }
 
 export const Categories = createSlice({
     name: 'categories',
     initialState: InitialState,
-    reducers:{
+    reducers: {
      resetCategories: () => {
         return InitialState
      },

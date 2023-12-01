@@ -33,7 +33,10 @@ export const Search: React.FC<PropsSearch> = ({onSearch = () => {}})=>{
        ref={textInputRef}
        placeholder='Search'
        style={styles.searchInput}
-       onChangeText={(value) => hanlerSearch(value)}
+       onChangeText={(value) => {
+        hanlerSearch(value)
+        console.log(value)
+       }}
        />
         </Pressable>
     )
