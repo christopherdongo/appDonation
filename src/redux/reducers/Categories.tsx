@@ -1,19 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import {createSlice} from '@reduxjs/toolkit';
 
 export type CategoriesType = {
-    categoryId: number,
-    name: string
-}
-
+  categoryId: number;
+  name: string;
+};
 
 interface Initial {
-categories: CategoriesType[];
+  categories: CategoriesType[];
   selectedCategoryId: number;
 }
 
 const InitialState: Initial = {
-  categories:[
+  categories: [
     {
       categoryId: 1,
       name: 'Highlight',
@@ -67,23 +65,22 @@ const InitialState: Initial = {
       name: 'Art and Craft Supplies',
     },
   ],
-    selectedCategoryId: 1
-}
+  selectedCategoryId: 1,
+};
 
 export const Categories = createSlice({
-    name: 'categories',
-    initialState: InitialState,
-    reducers: {
-     resetCategories: () => {
-        return InitialState
-     },
-     updateSelectedCategoryId: (state, action) => {
-        state.selectedCategoryId = action.payload;
-     }
-    }
-})
-
+  name: 'categories',
+  initialState: InitialState,
+  reducers: {
+    resetCategories: () => {
+      return InitialState;
+    },
+    updateSelectedCategoryId: (state, action) => {
+      state.selectedCategoryId = action.payload;
+    },
+  },
+});
 
 export const {resetCategories, updateSelectedCategoryId} = Categories.actions;
 
-export default Categories.reducer
+export default Categories.reducer;

@@ -44,5 +44,9 @@ export const styles = StyleSheet.create({
         marginHorizontal: horizontalScale(24),
         marginBottom: verticalScale(16),
         marginTop: verticalScale(6)
+    },
+    donationItemsContainer:{
+        marginTop: verticalScale(20),
+        marginHorizontal: horizontalScale(24)
     }
 })
