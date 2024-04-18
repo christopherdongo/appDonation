@@ -1,11 +1,13 @@
 {
-    "cSpell.enableFiletypes": [
-        "dart",
-        "dockercompose",
-        "dockerfile",
-        "editorconfig",
-        "jsx-attr",
-        "jsx-tags",
-        "makefile"
-    ]
+  "cSpell.enableFiletypes": [
+    "dart",
+    "dockercompose",
+    "dockerfile",
+    "editorconfig",
+    "jsx-attr",
+    "jsx-tags",
+    "makefile"
+  ],
+  "workbench.tree.enableStickyScroll": true,
+  "notebook.stickyScroll.enabled": false
 }

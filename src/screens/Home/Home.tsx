@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
@@ -28,7 +29,7 @@ import {Button} from '../../components/Button/Button';
 import {styles} from './styles';
 import {Search} from '../../components/Search/Search';
 import {Tab} from '../../components/Tab/Tab';
-import { SingleDonationItem } from '../../components/SingleDonationItem/SingleDonationItem';
+import {SingleDonationItem} from '../../components/SingleDonationItem/SingleDonationItem';
 
 export const Home: React.FC = () => {
   const {firstName, lastName, profileImage} = useSelector(
@@ -50,7 +51,7 @@ export const Home: React.FC = () => {
 
   const categoryPageSize: number = 4;
 
-  console.log(donationItems)
+  console.log(donationItems);
 
   useEffect(() => {
     const filterdItems = donations.filter(value =>
@@ -146,23 +147,26 @@ export const Home: React.FC = () => {
             )}
           />
         </View>
-         {
-          donationItems.length > 0 && (
-            <View style={styles.donationItemsContainer}> 
-              {
-                donationItems.map((value, index) => (
-                  <SingleDonationItem 
-                  key={index}  
+        {donationItems.length > 0 && (
+          <View style={styles.donationItemsContainer}>
+            {donationItems.map((value, index) => (
+              <View key={value.donationItemId} style={styles.singleDonationItem}>
+                <SingleDonationItem
+                  donationItemId={value.donationItemId}
+                  onPress={console.log}
                   uri={value.image}
                   price={parseFloat(value.price)}
-                  title={value.name}
-                  badgeTitle={categories.filter(val => val.categoryId === selectedCategoryId)[0].name}
-                  /> 
-                ))
-              }
-            </View>
-          )
-         }
+                  donationTitle={value.name}
+                  badgeTitle={
+                    categories.filter(
+                      val => val.categoryId === selectedCategoryId,
+                    )[0].name
+                  }
+                />
+              </View>
+            ))}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
