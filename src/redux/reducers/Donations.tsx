@@ -13,6 +13,7 @@ export type DonationsType = {
 interface Initial {
     donations: DonationsType[];
     selectedDonationId: null;
+    selectedDonationInformation?: {} 
     }
 
 const InitialState: Initial = {
@@ -218,7 +219,8 @@ donations: [
       price: '13.83',
     },
   ],
-selectedDonationId: null
+selectedDonationId: null,
+selectedDonationInformation: {}
 }
 
 export const Donations = createSlice({
@@ -229,7 +231,8 @@ export const Donations = createSlice({
         return InitialState
       },
       updateSelectedDonationId: (state, action) => {
-        state.selectedDonationId = action.payload
+        state.selectedDonationId = action.payload,
+        state.selectedDonationInformation = state.donations.find(item => item.donationItemId === action.payload)
       }
     }
 

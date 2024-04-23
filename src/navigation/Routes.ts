@@ -1,6 +1,6 @@
 
 
 export const Routes = {
-    Home: "Home" as string,
-    SingleDonationItem: 'SingleDonationItem' as string
+    Home: "Home",
+    SingleDonationItem: 'SingleDonationItem'
 }

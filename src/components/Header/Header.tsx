@@ -6,7 +6,7 @@ type PropsHeader = {
   title: string,
   type?: number,
   color?: string,
-  numberOfLines: number,
+  numberOfLines?: number,
 };
 
 export const Header: React.FC<PropsHeader> = ({

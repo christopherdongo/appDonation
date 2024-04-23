@@ -24,14 +24,16 @@ import {
   updateSelectedCategoryId,
   CategoriesType,
 } from '../../redux/reducers/Categories';
-import {resetDonations, DonationsType} from '../../redux/reducers/Donations';
+import {resetDonations, DonationsType, updateSelectedDonationId} from '../../redux/reducers/Donations';
 import {Button} from '../../components/Button/Button';
 import {styles} from './styles';
 import {Search} from '../../components/Search/Search';
 import {Tab} from '../../components/Tab/Tab';
 import {SingleDonationItem} from '../../components/SingleDonationItem/SingleDonationItem';
+import { Routes } from '../../navigation/Routes';
+import { SingleDonationItemProps } from '../../navigation/MainNavigation'
 
-export const Home: React.FC = () => {
+export const Home: React.FC<SingleDonationItemProps> = ({ navigation }) => {
   const {firstName, lastName, profileImage} = useSelector(
     (state: RootState) => state.user,
   );
@@ -50,8 +52,6 @@ export const Home: React.FC = () => {
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
 
   const categoryPageSize: number = 4;
-
-  console.log(donationItems);
 
   useEffect(() => {
     const filterdItems = donations.filter(value =>
@@ -153,7 +153,10 @@ export const Home: React.FC = () => {
               <View key={value.donationItemId} style={styles.singleDonationItem}>
                 <SingleDonationItem
                   donationItemId={value.donationItemId}
-                  onPress={console.log}
+                  onPress={selectedDonationId => {
+                    dispatch(updateSelectedDonationId(selectedDonationId))
+                    navigation.navigate('SingleDonationItem')
+                  }}
                   uri={value.image}
                   price={parseFloat(value.price)}
                   donationTitle={value.name}
