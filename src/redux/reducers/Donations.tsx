@@ -7,10 +7,9 @@ export type DonationsType = {
     categoryIds: number[],
     price: string,
     image: string
-
 }
 
-interface Initial {
+export interface Initial {
     donations: DonationsType[];
     selectedDonationId: null;
     selectedDonationInformation?: {} 

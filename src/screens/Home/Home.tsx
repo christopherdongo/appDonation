@@ -14,24 +14,16 @@ import {globalStyle} from '../../styles/globalStyle';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {
-  updateFirstName,
-  updateLastName,
-  resetTopInitialState,
-} from '../../redux/reducers/User';
-import {
-  Categories,
-  resetCategories,
   updateSelectedCategoryId,
   CategoriesType,
 } from '../../redux/reducers/Categories';
-import {resetDonations, DonationsType, updateSelectedDonationId} from '../../redux/reducers/Donations';
+import { DonationsType, updateSelectedDonationId } from '../../redux/reducers/Donations';
 import {Button} from '../../components/Button/Button';
 import {styles} from './styles';
 import {Search} from '../../components/Search/Search';
 import {Tab} from '../../components/Tab/Tab';
 import {SingleDonationItem} from '../../components/SingleDonationItem/SingleDonationItem';
-import { Routes } from '../../navigation/Routes';
-import { SingleDonationItemProps } from '../../navigation/MainNavigation'
+import { SingleDonationItemProps, RootStack } from '../../navigation/MainNavigation'
 
 export const Home: React.FC<SingleDonationItemProps> = ({ navigation }) => {
   const {firstName, lastName, profileImage} = useSelector(
@@ -149,13 +141,15 @@ export const Home: React.FC<SingleDonationItemProps> = ({ navigation }) => {
         </View>
         {donationItems.length > 0 && (
           <View style={styles.donationItemsContainer}>
-            {donationItems.map((value, index) => (
+            {donationItems.map((value, index) =>{ 
+              const categoryInformationFilter = categories.filter(val => val.categoryId === selectedCategoryId)
+              return (
               <View key={value.donationItemId} style={styles.singleDonationItem}>
                 <SingleDonationItem
                   donationItemId={value.donationItemId}
                   onPress={selectedDonationId => {
                     dispatch(updateSelectedDonationId(selectedDonationId))
-                    navigation.navigate('SingleDonationItem')
+                    navigation.navigate('SingleDonationItem',{ categoryInformation: categoryInformationFilter?.[0] || {} })
                   }}
                   uri={value.image}
                   price={parseFloat(value.price)}
@@ -167,7 +161,7 @@ export const Home: React.FC<SingleDonationItemProps> = ({ navigation }) => {
                   }
                 />
               </View>
-            ))}
+            )}) }
           </View>
         )}
       </ScrollView>
